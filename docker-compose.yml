@@ -8,3 +8,10 @@ services:
       - ./server:/go/src/fit_record_server
     ports:
       - 3001:3001
+  db:
+    build:
+      context: .
+      dockerfile: mysql.Dockerfile
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
