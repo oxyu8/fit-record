@@ -9,9 +9,22 @@ services:
     ports:
       - 3001:3001
   db:
+    container_name: db
     build:
       context: .
       dockerfile: mysql.Dockerfile
+    env_file:
+      - ./mysql/.env
+    volumes:
+      - ./db-data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - type: bind
+        source: ./mysql/init
+        target: /docker-entrypoint-initdb.d
     platform: linux/x86_64
     ports:
       - 3306:3306
+
+volumes:
+  db-data:
+    name: fit_record_db
